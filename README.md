@@ -1,1 +1,1 @@
-Repository for Python_training
+Repository for Python_training_Kim
