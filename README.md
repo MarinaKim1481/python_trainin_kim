@@ -1,1 +1,1 @@
-# python_trainin_kim
+Repository for Python_training
