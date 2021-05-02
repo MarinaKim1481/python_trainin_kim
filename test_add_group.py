@@ -56,7 +56,6 @@ class TestAddGroup(unittest.TestCase):
         # Open homepage
         wd.get("http://localhost/addressbook/index.php")
 
-
     def Close_Auth(self, wd, username="admin", password="secret"):
         # Clear auth
         wd.find_element_by_name("user").clear()
