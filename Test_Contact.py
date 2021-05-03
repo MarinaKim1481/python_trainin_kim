@@ -3,22 +3,22 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
-from group import Contact
+from contact import contact
 import unittest
 
-class TestContact(unittest.TestCase):
+class testcontact(unittest.TestCase):
     def setUp(self):
         self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(30)
 
-    def test_contact(self):
+    def test__add_contact(self):
         wd = self.wd
-        self.Open_web(wd)
-        self.Auth(wd, "admin", password="secret")
-        self.Add_contact(wd, Contact(firstname="firstname", middlename="middlename", lastname="lastname", nickname="nickname", title="title", company="company", address="address", home="home", mobile="mobile", work="work", fax="fax", email="email", email2="email2", email3="email3", homepage="homepage", bday="bday", bmonth="bmonth", byears="1990", aday="aday", amonth="amonth", ayear="2010", address2="address2", phone2="phone2", notes="notes") )
-        self.Logout(wd, "admin", "secret")
+        self.open_web(wd)
+        self.auth(wd, "admin", password="secret")
+        self.add_contact(wd, contact(firstname="firstname", middlename="middlename", lastname="lastname", nickname="nickname", photo_title="photo_title", company="company", address="address", home_phone="home_phone", mobile_phone="mobile_phone", work_phone="work_phone", fax="fax", email="email", email2="email2", email3="email3", homepage="homepage", bday="bday", bmonth="bmonth", byears="1990", aday="aday", amonth="amonth", ayear="2010", address2="address2", phone2="phone2", notes="notes"))
+        self.logout(wd, "admin", "secret")
 
-    def Logout(self, wd, username, password):
+    def logout(self, wd, username, password):
         # logout
         wd.find_element_by_link_text("Logout").click()
         wd.find_element_by_name("user").clear()
@@ -26,7 +26,7 @@ class TestContact(unittest.TestCase):
         wd.find_element_by_name("pass").clear()
         wd.find_element_by_name("pass").send_keys(password)
 
-    def Add_contact(self, wd, contact) -> object:
+    def add_contact(self, wd, contact):
         # Add contact
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
@@ -39,7 +39,7 @@ class TestContact(unittest.TestCase):
         wd.find_element_by_name("nickname").send_keys(contact.nickname)
         wd.find_element_by_name("title").click()
         wd.find_element_by_name("title").clear()
-        wd.find_element_by_name("title").send_keys(contact.title)
+        wd.find_element_by_name("title").send_keys(contact.photo_title)
         wd.find_element_by_name("company").click()
         wd.find_element_by_name("company").clear()
         wd.find_element_by_name("company").send_keys(contact.company)
@@ -48,12 +48,13 @@ class TestContact(unittest.TestCase):
         wd.find_element_by_name("address").send_keys(contact.address)
         wd.find_element_by_name("home").click()
         wd.find_element_by_name("home").clear()
-        wd.find_element_by_name("home").send_keys(contact.home)
+        wd.find_element_by_name("home").send_keys(contact.home_phone)
+        wd.find_element_by_name("mobile").click()
         wd.find_element_by_name("mobile").clear()
-        wd.find_element_by_name("mobile").send_keys(contact.mobile)
+        wd.find_element_by_name("mobile").send_keys(contact.mobile_phone)
         wd.find_element_by_name("work").click()
         wd.find_element_by_name("work").clear()
-        wd.find_element_by_name("work").send_keys(contact.work)
+        wd.find_element_by_name("work").send_keys(contact.work_phone)
         wd.find_element_by_name("fax").click()
         wd.find_element_by_name("fax").clear()
         wd.find_element_by_name("fax").send_keys(contact.fax)
@@ -93,7 +94,7 @@ class TestContact(unittest.TestCase):
         wd.find_element_by_name("notes").send_keys(contact.notes)
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
 
-    def Auth(self, wd, admin, password):
+    def auth(self, wd, admin, password):
         # Auth
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(admin)
@@ -102,7 +103,7 @@ class TestContact(unittest.TestCase):
         wd.find_element_by_id("LoginForm").click()
         wd.find_element_by_xpath("//input[@value='Login']").click()
 
-    def Open_web(self, wd):
+    def open_web(self, wd):
         # Open web
         wd.get("http://localhost/addressbook/edit.php")
 
