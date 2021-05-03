@@ -14,21 +14,20 @@ class TestAddGroup(unittest.TestCase):
     
     def test_add_group(self):
         wd = self.wd
-        self.Open_HomePage(wd)
-        self.Login(wd, username="admin", password="secret")
-        self.Group_Actions(wd, Group(name="Test", header="Test_header", footer="Test_footer") )
-        self.Close_Auth(wd)
+        self.open_homepage(wd)
+        self.login(wd, username="admin", password="secret")
+        self.add_group(wd, Group(name="Test", header="Test_header", footer="Test_footer") )
+        self.close_auth(wd)
 
     def test_add_empty_group(self):
         wd = self.wd
-        self.Open_HomePage(wd)
-        self.Login(wd, username="admin", password="secret")
-        self.Group_Actions(wd, Group(name="", header="", footer="") )
-        self.Close_Auth(wd)
+        self.open_homepage(wd)
+        self.login(wd, username="admin", password="secret")
+        self.add_group(wd, Group(name="", header="", footer="") )
+        self.close_auth(wd)
 
-    def Group_Actions(self, wd, group):
+    def add_group(self, wd, group):
         # Open group page
-        wd.find_element_by_xpath("//input[@value='Login']").click()
         wd.find_element_by_link_text("groups").click()
         # Creation new
         wd.find_element_by_name("new").click()
@@ -44,20 +43,22 @@ class TestAddGroup(unittest.TestCase):
         wd.find_element_by_link_text("group page").click()
         wd.find_element_by_link_text("Logout").click()
 
-    def Login(self, wd, username, password):
+    def login(self, wd, username, password):
         # Login
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(username)
         wd.find_element_by_name("pass").clear()
         wd.find_element_by_name("pass").send_keys(password)
+        wd.find_element_by_xpath("//input[@value='Login']").click()
 
-    def Open_HomePage(self, wd):
+    def open_homepage(self, wd):
         # Open homepage
         wd.get("http://localhost/addressbook/index.php")
 
-    def Close_Auth(self, wd, username="admin", password="secret"):
+    def close_auth(self, wd, username="admin", password="secret"):
         # Clear auth
+        wd.find_element_by_link_text("Logout").click()
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(username)
         wd.find_element_by_name("pass").clear()
@@ -72,6 +73,9 @@ class TestAddGroup(unittest.TestCase):
         try: self.wd.switch_to_alert()
         except NoAlertPresentException as e: return False
         return True
+
+    def tearDown(self):
+        self.wd.quit()
 
 
 if __name__ == "__main__":
