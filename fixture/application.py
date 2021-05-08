@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
+from fixture.sessionHelper import sessionHelper
 
 
 class Application:
@@ -7,6 +8,7 @@ class Application:
     def __init__(self):
         self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(60)
+        self.sessionHelper = sessionHelper(self)
 
     def test_add_group(self, group):
         # Open group page
@@ -24,18 +26,6 @@ class Application:
         wd.find_element_by_name("submit").click()
         # Open group page
         wd.find_element_by_link_text("group page").click()
-
-    def login(self, username, password):
-        # Login
-        # Open homepage
-        wd = self.wd
-        self.open_homepage()
-        wd.find_element_by_name("user").click()
-        wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys(username)
-        wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys(password)
-        wd.find_element_by_xpath("//input[@value='Login']").click()
 
     def add_contact(self, contact):
         # Add contact
@@ -107,15 +97,6 @@ class Application:
         wd.find_element_by_name("notes").clear()
         wd.find_element_by_name("notes").send_keys(contact.notes)
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
-
-    def close_auth(self, username="admin", password="secret"):
-        # Clear auth
-        wd = self.wd
-        wd.find_element_by_link_text("Logout").click()
-        wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys(username)
-        wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys(password)
 
     def open_homepage(self):
         # Open homepage
