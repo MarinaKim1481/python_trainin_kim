@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 
+
 class application_group:
 
     def __init__(self):
@@ -15,7 +16,6 @@ class application_group:
         wd.find_element_by_name("user").send_keys(username)
         wd.find_element_by_name("pass").clear()
         wd.find_element_by_name("pass").send_keys(password)
-
 
     def add_contact(self, contact):
         # Add contact
@@ -86,7 +86,6 @@ class application_group:
         wd.find_element_by_name("notes").send_keys(contact.notes)
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
 
-
     def auth(self, admin, password):
         # Auth
         wd = self.wd
@@ -98,12 +97,10 @@ class application_group:
         wd.find_element_by_id("LoginForm").click()
         wd.find_element_by_xpath("//input[@value='Login']").click()
 
-
     def open_web(self):
         # Open web
         wd = self.wd
         wd.get("http://localhost/addressbook/edit.php")
-
 
     def tearDown(self):
         self.wd.quit()
