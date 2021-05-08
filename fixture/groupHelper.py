@@ -3,7 +3,7 @@ class groupHelper:
     def __init__(self, app):
         self.app = app
 
-    def test_add_group(self, group):
+    def add(self, group):
         # Open group page
         wd = self.app.wd
         wd.find_element_by_link_text("groups").click()

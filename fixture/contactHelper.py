@@ -1,12 +1,11 @@
 from selenium.webdriver.support.ui import Select
 
-
 class contactHelper:
 
     def __init__(self, app):
         self.app = app
 
-    def add_contact(self, contact):
+    def add(self, contact):
         # Add contact
         wd = self.app.wd
         self.app.wd.get("http://localhost/addressbook/edit.php")
