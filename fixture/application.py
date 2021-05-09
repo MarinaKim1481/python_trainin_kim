@@ -3,8 +3,6 @@ from fixture.sessionHelper import sessionHelper
 from fixture.groupHelper import groupHelper
 from fixture.contactHelper import contactHelper
 
-
-
 class Application:
 
     def __init__(self):
