@@ -26,3 +26,14 @@ class groupHelper:
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_name("delete").click()
         wd.find_element_by_link_text("group page").click()
+
+    def test_edit_group(self):
+        wd = self.app.wd
+        wd.find_element_by_link_text("groups").click()
+        wd.find_element_by_name("selected[]").click()
+        wd.find_element_by_name("edit").click()
+        wd.find_element_by_name("group_name").click()
+        wd.find_element_by_name("group_name").clear()
+        wd.find_element_by_name("group_name").send_keys("New")
+        wd.find_element_by_name("update").click()
+        wd.find_element_by_link_text("group page").click()
