@@ -27,7 +27,7 @@ class groupHelper:
         wd.find_element_by_name("delete").click()
         wd.find_element_by_link_text("group page").click()
 
-    def test_edit_group(self):
+    def edit_group(self):
         wd = self.app.wd
         wd.find_element_by_link_text("groups").click()
         wd.find_element_by_name("selected[]").click()
