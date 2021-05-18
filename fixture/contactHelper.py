@@ -1,12 +1,12 @@
 from selenium.webdriver.support.ui import Select
 
-class contactHelper:
+class ContactHelper:
 
     def __init__(self, app):
         self.app = app
 
     def add(self, contact):
-        # Add contact
+        # Add Contact
         wd = self.app.wd
         self.app.wd.get("http://localhost/addressbook/edit.php")
         wd.find_element_by_name("firstname").click()
@@ -84,9 +84,9 @@ class contactHelper:
         wd.switch_to_alert().accept()
         wd.find_element_by_link_text("home").click()
 
-    def edit_contact(self):
+    def edit_first_contact(self):
         wd = self.app.wd
-        wd.find_element_by_name("selected[]").click()
+        wd.find_element_by_link_text("home").click()
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
