@@ -5,6 +5,8 @@ from fixture.application import Application
 def app(request):
     fixture = Application()
     fixture.sessionHelper.login("admin", password="secret")
-    request.addfinalizer(fixture.destroy)
+    def fin():
+        fixture.sessionHelper.close_auth()
+        fixture.destroy()
+    request.addfinalizer(fin)
     return fixture
-    fixture.sessionHelper.close_auth("admin", "secret")
