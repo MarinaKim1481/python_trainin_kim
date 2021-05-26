@@ -75,10 +75,11 @@ class ContactHelper:
         wd.find_element_by_name("notes").clear()
         wd.find_element_by_name("notes").send_keys(contact.notes)
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
+        wd.find_element_by_link_text("home page").click()
 
     def delete_first_contact(self):
         wd = self.app.wd
-        self.app.open_homepage()
+        self.open_homepage()
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
@@ -86,7 +87,7 @@ class ContactHelper:
 
     def edit_first_contact(self):
         wd = self.app.wd
-        self.app.open_homepage()
+        self.open_homepage()
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
@@ -99,3 +100,8 @@ class ContactHelper:
         self.app.wd.get("http://localhost/addressbook/edit.php")
         return len(wd.find_elements_by_name("selected[]"))
 
+    def open_homepage(self):
+        # Open homepage
+        wd = self.app.wd
+        if not(wd.current_url.endswith("/index.php") and len(wd.find_elements_by_link_text("all e-mail")) > 0):
+            wd.get("http://localhost/addressbook/index.php")
