@@ -15,7 +15,8 @@ class Application:
     def open_homepage(self):
         # Open homepage
         wd = self.wd
-        wd.get("http://localhost/addressbook/index.php")
+        if not (wd.current_url.endswith("/index.php") and len(wd.find_elements_by_link_text("all e-mail")) > 0):
+            wd.get("http://localhost/addressbook/index.php")
 
     def destroy(self):
         self.wd.quit()
