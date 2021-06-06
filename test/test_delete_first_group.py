@@ -7,3 +7,5 @@ def test_delete_first_group(app):
     app.groupHelper.delete_first_group()
     new_list = app.groupHelper.get_group_list()
     assert len(old_list) - 1 == len(new_list)
+    old_list[0:1] = []
+    assert old_list == new_list
