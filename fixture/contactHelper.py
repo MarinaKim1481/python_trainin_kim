@@ -106,8 +106,9 @@ class ContactHelper:
         self.app.wd.get("http://localhost/addressbook/index.php")
         contacts = []
         for element in wd.find_elements_by_css_selector("tr"):
-            id = element.id
-            contacts.append(Contact(id=id))
+            firstname = element.get_attribute('title')
+            id = element.get_attribute('id')
+            contacts.append(Contact(firstname=firstname, id=id))
         return contacts
 
 
