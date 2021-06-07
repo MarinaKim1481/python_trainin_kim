@@ -86,13 +86,16 @@ class ContactHelper:
         wd.switch_to_alert().accept()
         wd.find_element_by_link_text("home").click()
 
-    def edit_first_contact(self):
+    def edit_first_contact(self, new):
         wd = self.app.wd
         self.app.open_homepage()
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys("Second")
+        wd.find_element_by_name("firstname").send_keys(new.firstname)
+        wd.find_element_by_name("lastname").click()
+        wd.find_element_by_name("lastname").clear()
+        wd.find_element_by_name("lastname").send_keys(new.lastname)
         wd.find_element_by_name("update").click()
         wd.find_element_by_link_text("home page").click()
 
@@ -105,11 +108,9 @@ class ContactHelper:
         wd = self.app.wd
         self.app.wd.get("http://localhost/addressbook/index.php")
         contacts = []
-        for element in wd.find_elements_by_css_selector("tr"):
-            firstname = element.get_attribute('title')
-            id = element.get_attribute('id')
-            contacts.append(Contact(firstname=firstname, id=id))
+        for element in wd.find_elements_by_name("entry"):
+            firstname = element.find_element_by_css_selector("td:nth-child(3)").text
+            lastname = element.find_element_by_css_selector("td:nth-child(2)").text
+            id = element.find_element_by_name("selected[]").get_attribute("value")
+            contacts.append(Contact(firstname=firstname, lastname=lastname, id=id))
         return contacts
-
-
-

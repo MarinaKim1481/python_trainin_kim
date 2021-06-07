@@ -8,10 +8,10 @@ def test_edit_contact(app):
                     email3="email3", homepage="homepage", bday="bday", bmonth="bmonth", byears="1990", aday="aday",
                     amonth="amonth", ayear="2010", address2="address2", phone2="phone2", notes="notes"))
     old_list = app.contactHelper.get_contact_list()
-    contact = Contact(firstname="Second")
-    contact.id = old_list[1].id
-    app.contactHelper.edit_first_contact(сontact)
+    contact = Contact(firstname="firstname", lastname="lastname")
+    contact.id = old_list[0].id
+    app.contactHelper.edit_first_contact(contact)
     new_list = app.contactHelper.get_contact_list()
     assert len(old_list) == len(new_list)
-    old_list[1] = contact
+    old_list[0] = contact
     assert(sorted(old_list, key=Contact.id_or_max)) == (sorted(new_list, key=Contact.id_or_max))
