@@ -8,7 +8,7 @@ def test_edit_contact(app):
                     email3="email3", homepage="homepage", bday="bday", bmonth="bmonth", byears="1990", aday="aday",
                     amonth="amonth", ayear="2010", address2="address2", phone2="phone2", notes="notes"))
     old_list = app.contactHelper.get_contact_list()
-    contact = Contact(firstname="firstname", lastname="lastname")
+    contact = Contact(firstname="firstname2", lastname="lastname2")
     contact.id = old_list[0].id
     app.contactHelper.edit_first_contact(contact)
     new_list = app.contactHelper.get_contact_list()

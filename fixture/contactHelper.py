@@ -11,7 +11,6 @@ class ContactHelper:
         wd = self.app.wd
         self.app.wd.get("http://localhost/addressbook/edit.php")
         wd.find_element_by_name("firstname").click()
-        wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
         wd.find_element_by_name("firstname").send_keys(contact.firstname)
         wd.find_element_by_name("middlename").clear()
