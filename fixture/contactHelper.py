@@ -76,6 +76,7 @@ class ContactHelper:
         wd.find_element_by_name("notes").send_keys(contact.notes)
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
         wd.find_element_by_link_text("home page").click()
+        self.contact_cache = None
 
     def delete_first_contact(self):
         wd = self.app.wd
@@ -84,6 +85,7 @@ class ContactHelper:
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
         wd.find_element_by_link_text("home").click()
+        self.contact_cache = None
 
     def edit_first_contact(self, new_contact_data):
         wd = self.app.wd
@@ -92,6 +94,7 @@ class ContactHelper:
         self.edit_contact(new_contact_data)
         wd.find_element_by_name("update").click()
         wd.find_element_by_link_text("home page").click()
+        self.contact_cache = None
 
     def edit_contact(self, contact):
         self.change_field_value("firstname", contact.firstname)
@@ -115,22 +118,26 @@ class ContactHelper:
         self.change_field_value("address2", contact.address2)
         self.change_field_value("phone2", contact.phone2)
         self.change_field_value("notes", contact.notes)
+        self.contact_cache = None
 
     def count(self):
         wd = self.app.wd
         self.app.wd.get("http://localhost/addressbook/index.php")
         return len(wd.find_elements_by_name("selected[]"))
 
+    contact_cache = None
+
     def get_contact_list(self):
-        wd = self.app.wd
-        self.app.wd.get("http://localhost/addressbook/index.php")
-        contacts = []
-        for element in wd.find_elements_by_xpath("//tr[@name='entry']"):
-            firstname = element.find_element_by_css_selector("td:nth-child(3)").text
-            lastname = element.find_element_by_css_selector("td:nth-child(2)").text
-            id = element.find_element_by_name("selected[]").get_attribute("value")
-            contacts.append(Contact(firstname=firstname, lastname=lastname, id=id))
-        return contacts
+        if self.contact_cache is None:
+            wd = self.app.wd
+            self.app.wd.get("http://localhost/addressbook/index.php")
+            self.contact_cache = []
+            for element in wd.find_elements_by_xpath("//tr[@name='entry']"):
+                firstname = element.find_element_by_css_selector("td:nth-child(3)").text
+                lastname = element.find_element_by_css_selector("td:nth-child(2)").text
+                id = element.find_element_by_name("selected[]").get_attribute("value")
+                self.contact_cache.append(Contact(firstname=firstname, lastname=lastname, id=id))
+        return list(self.contact_cache)
 
     def change_field_value(self, field_name, text):
         wd = self.app.wd
